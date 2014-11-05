@@ -5,7 +5,7 @@ attribute :source, :kind_of => String
 attribute :version, :kind_of => String
 attribute :args, :kind_of => String
 attribute :options, :kind_of => Hash, :default => {}
-attribute :user, :kind_of => string, :default => nil
+attribute :user, :kind_of => String, :default => nil
 
 def initialize(*args)
   super
