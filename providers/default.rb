@@ -34,6 +34,7 @@ def load_current_resource
   @current_resource.package(@new_resource.package)
   @current_resource.exists = true if package_exists?(@current_resource.package, @current_resource.version)
   @current_resource.upgradeable = true if upgradeable?(@current_resource.package)
+  @current_resource.user(@new_resource.user)
   #  @current_resource.installed = true if package_installed?(@current_resource.package)
 end
 
@@ -59,6 +60,7 @@ action :remove do
   if @current_resource.exists
     converge_by("uninstall package #{ @current_resource.package }") do
       execute "uninstall package #{@current_resource.package}" do
+        user @current_resource.user if @current_resource.user
         command "#{::ChocolateyHelpers.chocolatey_executable} uninstall  #{@new_resource.package} #{cmd_args}"
       end
     end
@@ -115,18 +117,21 @@ end
 
 def install(name)
   execute "install package #{name}" do
+    user @current_resource.user if @current_resource.user
     command "#{::ChocolateyHelpers.chocolatey_executable} install #{name} #{cmd_args}"
   end
 end
 
 def upgrade(name)
   execute "updating #{name} to latest" do
+    user @current_resource.user if @current_resource.user
     command "#{::ChocolateyHelpers.chocolatey_executable} update #{name} #{cmd_args}"
   end
 end
 
 def install_version(name, version)
   execute "install package #{name} version #{version}" do
+    user @current_resource.user if @current_resource.user
     command "#{::ChocolateyHelpers.chocolatey_executable} install #{name} -version #{version} #{cmd_args}"
   end
 end
