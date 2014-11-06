@@ -123,7 +123,7 @@ def install(name)
 end
 
 def upgrade(name)
-  Chef::Log.debug "user: #{@current_resource.user}"
+  
   execute "updating #{name} to latest" do
     user @current_resource.user  if @current_resource.user
     command "#{::ChocolateyHelpers.chocolatey_executable} update #{name} #{cmd_args}"
@@ -131,8 +131,8 @@ def upgrade(name)
 end
 
 def install_version(name, version)
+  Chef::Log.debug "user: #{@current_resource.user}"
   execute "install package #{name} version #{version}" do
-
     user @current_resource.user  if @current_resource.user 
     command "#{::ChocolateyHelpers.chocolatey_executable} install #{name} -version #{version} #{cmd_args}"
   end
