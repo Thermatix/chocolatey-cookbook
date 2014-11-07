@@ -118,6 +118,7 @@ def upgradeable?(name)
 end
 
 def install(name)
+  Chef::Log.info "^^^current_resource: " + @current_resource.inspect 
   execute "install package #{name}" do
     user  @current_resource.user if @current_resource.user  
     command "#{::ChocolateyHelpers.chocolatey_executable} install #{name} #{cmd_args}"
@@ -132,7 +133,6 @@ def upgrade(name)
 end
 
 def install_version(name, version)
-  Chef::Log.info "^^^current_resource: " + @current_resource.inspect 
   execute "install package #{name} version #{version}" do
     user  @current_resource.user if @current_resource.user
     command "#{::ChocolateyHelpers.chocolatey_executable} install #{name} -version #{version} #{cmd_args}"
