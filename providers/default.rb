@@ -36,7 +36,7 @@ def load_current_resource
   @current_resource.upgradeable = true if upgradeable?(@current_resource.package)
   @current_resource.user(@new_resource.user)
   #  @current_resource.installed = true if package_installed?(@current_resource.package)
-  Chef::Log.info "^^^current_resource: " + @current_resource 
+  Chef::Log.info "^^^current_resource: " + @current_resource.inspect 
   @current_resource
 end
 
