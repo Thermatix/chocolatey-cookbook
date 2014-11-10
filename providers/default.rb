@@ -120,7 +120,7 @@ end
 def install(name)
   Chef::Log.info "^^^current_resource: " + @current_resource.inspect 
   execute "install package #{name}" do
-    user  @current_resource.user if @current_resource.user  
+    user  @current_resource.instance_variable_get(:@user) if @current_resource.instance_variable_get(:@user)  
     command "#{::ChocolateyHelpers.chocolatey_executable} install #{name} #{cmd_args}"
   end
 end
